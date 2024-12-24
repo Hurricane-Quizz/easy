@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hurricane Safety Quiz Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f8ff;
+      color: #333;
+      text-align: center;
+      padding: 20px;
+    }
+    #game-container {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    .heart-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .heart {
+      width: 40px;
+      margin: 0 5px;
+    }
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div id="game-container">
+    <h1>Hurricane Safety Quiz</h1>
+    <div class="heart-container" id="heart-container">
+      <!-- Heart icons will load here -->
+    </div>
+    <p id="story">I found myself transported back in time, seven days before a massive hurricane was set to hit. My mission was to learn about hurricane safety to survive this impending disaster.</p>
+    <p id="question">Press Start to begin!</p>
+    <div id="choices"></div>
+    <button id="start-button">Start</button>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        question: "What should you pack in an emergency kit?",
+        choices: ["Candy and toys", "Water, flashlight, and first aid kit", "Television", "Heavy furniture"],
+        answer: 1,
+        story: "As I prepared for the storm, I realized I needed to pack an emergency kit. What should I include?"
+      },
+      {
+        question: "When should you evacuate during a hurricane?",
+        choices: ["When told by authorities", "When it starts raining", "When the wind blows hard", "Never"],
+        answer: 0,
+        story: "The news warned of the hurricane's approach. I knew I had to evacuate, but when was the right time?"
+      },
+      {
+        question: "What should you avoid during a hurricane?",
+        choices: ["Staying indoors", "Using candles", "Playing video games", "Boarding up windows"],
+        answer: 1,
+        story: "I remembered that using candles could be dangerous during a storm. What else should I avoid?"
+      },
+      {
+        question: "Why is it important to listen to weather warnings?",
+        choices: ["To stay informed", "To see if school is canceled", "To play in the rain", "To get scared"],
+        answer: 0,
+        story: "I tuned into the weather channel, realizing how crucial it was to stay informed about the storm."
+      },
+      {
+        question: "What does a hurricane watch mean?",
+        choices: ["A hurricane is possible", "A hurricane is happening", "Hurricanes are not dangerous", "The hurricane is over"],
+        answer: 0,
+        story: "The alert on my phone read 'hurricane watch.' I needed to understand what that meant."
+      },
+      {
+        question: "What is the eye of a hurricane?",
+        choices: ["The strongest part", "The calm center", "Where rain is heaviest", "Where the winds start"],
+        answer: 1,
+        story: "I learned that the eye of the hurricane was the calm center, but it was surrounded by chaos."
+      },
+      {
+        question: "What should you do if you're caught outside in a hurricane?",
+        choices: ["Find a ditch or low spot", "Climb a tree", "Run to open ground", "Stay where you are"],
+        answer: 0,
+        story: "If I found myself outside during the storm, I needed to know the safest place to go."
+      },
+      {
+        question: "Why are hurricanes dangerous?",
+        choices: ["They bring strong winds and flooding", "They make the      sky dark", "They stop electricity", "They cause rainbows"],
+        answer: 0,
+        story: "I reflected on the dangers of hurricanes, realizing they brought strong winds and flooding that could devastate communities."
+      },
+      {
+        question: "What is storm surge?",
+        choices: ["High ocean waves", "Rising sea levels caused by a hurricane", "Strong winds", "Rainfall during a storm"],
+        answer: 1,
+        story: "I learned about storm surge, a dangerous rise in sea levels that could flood coastal areas."
+      },
+      {
+        question: "What should you do with outdoor furniture before a hurricane?",
+        choices: ["Leave it outside", "Bring it indoors", "Throw it away", "Tie it to a tree"],
+        answer: 1,
+        story: "I rushed to secure my outdoor furniture, knowing I had to bring it indoors to prevent it from becoming a projectile."
+      },
+      {
+        question: "What should you do if your home is in a flood zone?",
+        choices: ["Evacuate immediately", "Stay on the first floor", "Ignore the warnings", "Turn off all lights"],
+        answer: 0,
+        story: "Living in a flood zone, I understood the importance of evacuating immediately when warned."
+      },
+      {
+        question: "What does a hurricane category indicate?",
+        choices: ["Size of the hurricane", "Strength of the winds", "Number of storms", "Rainfall amount"],
+        answer: 1,
+        story: "I learned that the hurricane category indicated the strength of the winds, which could determine the level of destruction."
+      },
+      {
+        question: "What should you avoid drinking during a hurricane?",
+        choices: ["Bottled water", "Tap water that may be contaminated", "Juice", "Soda"],
+        answer: 1,
+        story: "I realized that tap water could be contaminated during a storm, so I needed to avoid drinking it."
+      },
+      {
+        question: "What is the best source of information during a hurricane?",
+        choices: ["Social media", "Official weather channels and authorities", "Your friends", "TV shows"],
+        answer: 1,
+        story: "I knew that during a hurricane, the best source of information would be official weather channels and authorities."
+      },
+      {
+        question: "How can you protect windows during a hurricane?",
+        choices: ["Board them up with plywood", "Leave them open", "Cover them with paper", "Spray water on them"],
+        answer: 0,
+        story: "To protect my home, I needed to board up the windows with plywood to prevent them from shattering."
+      },
+      {
+        question: "What is the main cause of death during hurricanes?",
+        choices: ["Flooding", "Lightning", "Wind", "Falling trees"],
+        answer: 0,
+        story: "I learned that flooding was the main cause of death during hurricanes, making it crucial to stay safe."
+      },
+      {
+        question: "Why is it important to have a communication plan?",
+        choices: ["To find family if separated", "To order food", "To play games", "To call friends"],
+        answer: 0,
+        story: "I realized the importance of having a communication plan to find my family if we got separated."
+      },
+      {
+        question: "What should you do if power lines fall near your home?",
+        choices: ["Stay far away and report it", "Touch them carefully", "Drive over them", "Ignore them"],
+        answer: 0,
+        story: "If power lines fell, I needed to stay far away and report it to ensure everyone's safety."
+      },
+      {
+        question: "What is the most important thing to do after a hurricane?",
+        choices: ["Check for safety hazards", "Go outside immediately", "Start cleaning up", "Celebrate"],
+        answer: 0,
+        story: "After the storm passed, the first thing I needed to do was check for safety hazards before anything else."
+      },
+      {
+        question: "What happens to a hurricane when it moves over land?",
+        choices: ["It gains strength", "It weakens", "It stays the same", "It speeds up"],
+        answer: 1,
+        story: "I learned that hurricanes weaken when they move over land, losing the warm ocean water that fuels them."
+      },
+      {
+        question: "Why is it important to secure loose items outdoors?",
+        choices: ["To prevent them from becoming projectiles", "To keep them clean", "To avoid theft", "To make space"],
+        answer: 0,
+        story: "I quickly secured loose items outdoors to prevent them from becoming dangerous projectiles during the storm."
+      },
+      {
+        question: "What is a hurricane's main      energy source?",
+        choices: ["Cold air", "Warm ocean water", "Mountain winds", "Lightning"],
+        answer: 1,
+        story: "I discovered that a hurricane's main energy source is warm ocean water, which fuels its strength and intensity."
+      }
+    ];
+
+    let currentQuestionIndex = 0;
+    let lives = 5;
+    const maxLives = 5;
+
+    const questionElement = document.getElementById("question");
+    const choicesContainer = document.getElementById("choices");
+    const heartContainer = document.getElementById("heart-container");
+    const startButton = document.getElementById("start-button");
+    const storyElement = document.getElementById("story");
+
+    // Function to display hearts
+    function updateHearts() {
+      heartContainer.innerHTML = "";
+      for (let i = 0; i < lives; i++) {
+        const heartImg = document.createElement("img");
+        heartImg.src = "YOUR_IMAGE_URL_HERE"; // Replace with the correct path to your heart PNG
+        heartImg.alt = "Heart";
+        heartImg.className = "heart";
+        heartContainer.appendChild(heartImg);
+      }
+    }
+
+    function startGame() {
+      currentQuestionIndex = 0;
+      lives = maxLives;
+      updateHearts();
+      startButton.style.display = "none";
+      showQuestion();
+    }
+
+    function showQuestion() {
+      if (currentQuestionIndex >= questions.length) {
+        endGame(true);
+        return;
+      }
+
+      const currentQuestion = questions[currentQuestionIndex];
+      questionElement.textContent = currentQuestion.question;
+      choicesContainer.innerHTML = "";
+      storyElement.textContent = currentQuestion.story;
+
+      currentQuestion.choices.forEach((choice, index) => {
+        const button = document.createElement("button");
+        button.textContent = choice;
+        button.onclick = () => checkAnswer(index);
+        choicesContainer.appendChild(button);
+      });
+    }
+
+    function checkAnswer(selectedIndex) {
+      const correctIndex = questions[currentQuestionIndex].answer;
+
+      if (selectedIndex === correctIndex) {
+        currentQuestionIndex++;
+        showQuestion();
+      } else {
+        lives--;
+        updateHearts();
+        if (lives <= 0) {
+          endGame(false);
+        } else {
+          alert("Incorrect! Try again.");
+        }
+      }
+    }
+
+    function endGame(won) {
+      if (won) {
+        questionElement.textContent = "Congratulations! You survived the hurricane and learned how to stay safe.";
+        storyElement.textContent = "You have successfully navigated through the storm and are now prepared for any future hurricanes.";
+      } else {
+        questionElement.textContent = "Game Over! Siddhārtha Gautama's lesson was too harsh. Stay safe next time!";
+        storyElement.textContent = "You learned valuable lessons, but the storm was too much this time.";
+      }
+      choicesContainer.innerHTML = "";
+      startButton.style.display = "block";
+      startButton.textContent = "Play Again";
+    }
+
+    startButton.addEventListener("click", startGame);
+  </script>
+</body>
+</html>
