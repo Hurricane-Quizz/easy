@@ -44,18 +44,27 @@
   </style>
 </head>
 <body>
-  <div id="game-container">
-    <h1>Hurricane Safety Quiz</h1>
-    <div class="heart-container" id="heart-container">
-      <!-- Heart icons will load here -->
-    </div>
-    <p id="story">I found myself transported back in time, seven days before a massive hurricane was set to hit. My mission was to learn about hurricane safety to survive this impending disaster.</p>
-    <button id="start-button">Start Quiz</button>
-    <div id="question-container" style="display: none;">
-      <p id="question"></p>
-      <div id="choices"></div>
-    </div>
+
+<div id="game-container">
+  <h1>Hurricane Safety Quiz</h1>
+  <div class="heart-container" id="heart-container">
+    <!-- Heart icons will load here -->
   </div>
+  <p id="story">
+    As I stood on the porch of my coastal home, the air was thick with tension. The news had just reported that a massive hurricane was brewing in the Atlantic, and it was projected to make landfall in just seven days. I could feel the urgency in the air, a sense of impending danger that sent shivers down my spine.
+    <br><br>
+    I remembered the stories my grandparents told me about hurricanes—how they could transform peaceful shores into chaotic battlegrounds of wind and water. I knew I had to prepare, but I also realized that knowledge was my best defense. I needed to learn everything I could about hurricane safety to protect myself and my loved ones.
+    <br><br>
+    With a determined heart, I decided to embark on a mission: to gather crucial information about hurricane preparedness. I would face a series of questions that would test my knowledge and help me understand what it truly means to be safe during a storm. Each answer would bring me closer to being ready for the hurricane that loomed on the horizon.
+    <br><br>
+    Now, it’s time to put my knowledge to the test. Will I be able to survive the storm and emerge wiser, or will I learn the hard way? The clock is ticking, and the hurricane is coming. Let’s begin the journey to safety!
+  </p>
+  <button id="start-button">Start Quiz</button>
+  <div id="question-container" style="display: none;">
+    <p id="question"></p>
+    <div id="choices"></div>
+  </div>
+</div>
 
   <script>
     const questions = [
@@ -112,12 +121,11 @@
       {
         question: "What should you do if your home is in a flood zone?",
         choices: ["Evacuate immediately", "Stay on the first floor", "Ignore the warnings", "Turn off all lights"],
-               answer: 0,
+        answer: 0,
       },
       {
         question: "What does a hurricane category indicate?",
-        choices: ["Size of the hurricane", "Strength of the winds", "Number of storms", "Rainfall amount"],
-        answer: 1,
+        choices: ["Size of the hurricane", "Strength of the winds", "Number of storms", "Rainfall amount"],        answer: 1,
       },
       {
         question: "What should you avoid drinking during a hurricane?",
@@ -241,11 +249,11 @@
       if (won) {
         questionElement.textContent = "Congratulations! You survived the hurricane and learned how to stay safe.";
       } else {
-        questionElement        questionElement.textContent = "Game Over! You didn't survive the hurricane this time.";
+        questionElement.textContent = "Game Over! You didn't survive the hurricane this time.";
       }
       choicesContainer.innerHTML = "";
       startButton.style.display = "block";
-      startButton.textContent = "Play Again";
+      startButton      startButton.textContent = "Play Again";
       questionContainer.style.display = "none"; // Hide the question container
     }
 
