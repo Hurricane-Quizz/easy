@@ -115,4 +115,139 @@
       },
       {
         question: "What does a hurricane category indicate?",
-        choices: ["Size of the hurricane", "Strength of the winds", "Number of storms", "Rainfall amount"],
+        choices: ["Size of the hurricane", "Strength of the winds", "Number of storms", "Rainfall amount"],        answer: 1,
+      },
+      {
+        question: "What should you avoid drinking during a hurricane?",
+        choices: ["Bottled water", "Tap water that may be contaminated", "Juice", "Soda"],
+        answer: 1,
+      },
+      {
+        question: "What is the best source of information during a hurricane?",
+        choices: ["Social media", "Official weather channels and authorities", "Your friends", "TV shows"],
+        answer: 1,
+      },
+      {
+        question: "How can you protect windows during a hurricane?",
+        choices: ["Board them up with plywood", "Leave them open", "Cover them with paper", "Spray water on them"],
+        answer: 0,
+      },
+      {
+        question: "What is the main cause of death during hurricanes?",
+        choices: ["Flooding", "Lightning", "Wind", "Falling trees"],
+        answer: 0,
+      },
+      {
+        question: "Why is it important to have a communication plan?",
+        choices: ["To find family if separated", "To order food", "To play games", "To call friends"],
+        answer: 0,
+      },
+      {
+        question: "What should you do if power lines fall near your home?",
+        choices: ["Stay far away and report it", "Touch them carefully", "Drive over them", "Ignore them"],
+        answer: 0,
+      },
+      {
+        question: "What is the most important thing to do after a hurricane?",
+        choices: ["Check for safety hazards", "Go outside immediately", "Start cleaning up", "Celebrate"],
+        answer: 0,
+      },
+      {
+        question: "What happens to a hurricane when it moves over land?",
+        choices: ["It gains strength", "It weakens", "It stays the same", "It speeds up"],
+        answer: 1,
+      },
+      {
+        question: "Why is it important to secure loose items outdoors?",
+        choices: ["To prevent them from becoming projectiles", "To keep them clean", "To avoid theft", "To make space"],
+        answer: 0,
+      },
+      {
+        question: "What is a hurricane's main energy source?",
+        choices: ["Cold air", "Warm ocean water", "Mountain winds", "Lightning"],
+        answer: 1,
+      }
+    ];
+
+    let currentQuestionIndex = 0;
+    let lives = 5;
+    const maxLives = 5;
+
+    const questionElement = document.getElementById("question");
+    const choicesContainer = document.getElementById("choices");
+    const heartContainer = document.getElementById("heart-container");
+    const startButton = document.getElementById("start-button");
+    const questionContainer = document.getElementById("question-container");
+
+    // Function to display hearts
+    function updateHearts() {
+      heartContainer.innerHTML = "";
+      for (let i = 0; i < lives; i++) {
+        const heartImg = document.createElement("img");
+        heartImg.src = "heart.jpeg"; // Replace with the correct path to your heart PNG
+        heartImg.alt = "Heart";
+        heartImg.className = "heart";
+        heartContainer.appendChild(heartImg);
+      }
+    }
+
+    function startGame() {
+      currentQuestionIndex = 0;
+      lives = maxLives;
+      updateHearts();
+      startButton.style.display = "none";
+      questionContainer.style.display = "block";
+      showQuestion();
+    }
+
+    function showQuestion() {
+      if (currentQuestionIndex >= questions.length) {
+        endGame(true);
+        return;
+      }
+
+      const currentQuestion = questions[currentQuestionIndex];
+      questionElement.textContent = currentQuestion.question;
+      choicesContainer.innerHTML = "";
+
+      currentQuestion.choices.forEach((choice, index) => {
+        const button = document.createElement("button");
+        button.textContent = choice;
+        button.onclick = () => checkAnswer(index);
+        choicesContainer.appendChild(button);
+      });
+    }
+
+    function checkAnswer(selectedIndex) {
+      const correctIndex = questions[currentQuestionIndex].answer;
+
+      if (selectedIndex === correctIndex) {
+        currentQuestionIndex++;
+        showQuestion();
+      } else {
+        lives--;
+        updateHearts();
+        if (lives <= 0) {
+          endGame(false);
+        } else {
+          alert("Incorrect! Try again.");
+        }
+      }
+    }
+
+    function endGame(won) {
+      if (won) {
+        questionElement.textContent = "Congratulations! You survived the hurricane and learned how to stay safe.";
+      } else {
+        questionElement.textContent = "Game Over! You didn't survive the hurricane this time.";
+      }
+      choicesContainer.innerHTML = "";
+      startButton.style.display = "block";
+      startButton      startButton.textContent = "Play Again";
+      questionContainer.style.display = "none"; // Hide the question container
+    }
+
+    startButton.addEventListener("click", startGame);
+  </script>
+</body>
+</html>
